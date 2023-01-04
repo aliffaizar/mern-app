@@ -22,6 +22,6 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: cd client && npm install
-      - run: cd clinet && npm test --if-present
+      - run: cd clinet && npm test
       - run: cd client && npm run build
       - run: npm run test
