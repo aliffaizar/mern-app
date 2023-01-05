@@ -21,12 +21,10 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
 
-      - name: create .env
-        run: |
-          touch .env && echo MONGO_URI=${{ secrets.MONGO_URI }} >> .env
-
       - run: npm ci
       - run: cd client && npm install
       - run: cd client && npm run test
       - run: cd client && npm run build
-      - run: npm run test
+      - run: |
+          touch .env && echo MONGO_URI=${{ secrets.MONGO_URI }} >> .env
+          npm run test
