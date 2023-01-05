@@ -23,8 +23,7 @@ jobs:
 
       - name: create .env
         run: |
-          touch .env
-          echo MONGO_URI=${{ secrets.MONGO_URI }} >> .env
+          touch .env && echo MONGO_URI=${{ secrets.MONGO_URI }} >> .env
 
       - run: npm ci
       - run: cd client && npm install
