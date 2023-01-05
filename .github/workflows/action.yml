@@ -24,7 +24,9 @@ jobs:
       - run: npm ci
       - run: cd client && npm install
       - run: cd client && npm run test
-      - run: cd client && npm run build
-      - run: |
-          touch .env && echo MONGO_URI=${{ secrets.MONGO_URI }} >> .env
-          npm run test
+      - name: Build Frontend
+        run: cd client && npm run build
+      - name: Test Backend
+        env:
+          MONGO_URI: ${{ secrets.MONGO_URI }}
+        run: npm run test
