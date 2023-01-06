@@ -4,16 +4,10 @@ const propertySchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, 'Name should be provided'],
+      required: [true, 'name should be provided'],
       text: true,
     },
     location: {
-      type: String,
-      default: 'Point',
-      enum: ['Point'],
-      coordinates: {
-        type: [Number],
-      },
       address: {
         type: String,
       },
@@ -23,21 +17,27 @@ const propertySchema = new mongoose.Schema(
     },
     price: {
       type: Number,
-      required: [true, 'Price should be provided'],
+      required: [true, 'price should be provided'],
     },
     type: {
       type: String,
-      enum: ['house', 'apartement', 'condo', 'townhouse', 'land'],
-      required: [true, 'Type should be provided'],
+      enum: {
+        values: ['house', 'apartement', 'condo', 'townhouse', 'land'],
+        message: 'type should be house, apartement, condo, townhouse, land',
+      },
+      required: [true, 'type should be provided'],
     },
     category: {
       type: String,
-      enum: ['rent', 'sale'],
-      required: [true, 'Category should be provided'],
+      enum: {
+        values: ['rent', 'sale'],
+        message: 'category should be rent or sale',
+      },
+      required: [true, 'category should be provided'],
     },
     description: {
       type: String,
-      required: [true, 'Description should be provided'],
+      required: [true, 'description should be provided'],
     },
     images: {
       type: [String],
@@ -45,7 +45,7 @@ const propertySchema = new mongoose.Schema(
     agent: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-      required: [true, 'Agent should be provided'],
+      required: [true, 'agent should be provided'],
     },
   },
   {
@@ -60,7 +60,6 @@ const propertySchema = new mongoose.Schema(
   }
 )
 
-propertySchema.index({ location: '2dsphere' })
 propertySchema.index({ name: 'text' })
 
 const Property = mongoose.model('Property', propertySchema)
